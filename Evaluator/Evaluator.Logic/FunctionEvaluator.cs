@@ -2,7 +2,7 @@
 
 public class FunctionEvaluator
 {
-    public static double Evalute(string infix)
+    public static double Evaluate(string infix)
     {
         var postfix = ToPostfix(infix);
         return Calculate(postfix);
@@ -10,101 +10,105 @@ public class FunctionEvaluator
 
     private static double Calculate(string postfix)
     {
-        var stack = new Stack<double>();
-        foreach (var item in postfix)
+        var stack = new Stack<double>(100);
+        for (int i = 0; i < postfix.Length; i++)
         {
-            if (IsOperator(item))
+            if (IsOperator(postfix[i]))
             {
-                var operator2 = stack.Pop();
-                var operator1 = stack.Pop();
-                stack.Push(Result(operator1, item, operator2));
+               var number2 = stack.Pop();
+               var number1 = stack.Pop();
+                var result = Calculate(number1, postfix[i], number2);
+                stack.Push(result);
             }
             else
             {
-                stack.Push(char.GetNumericValue(item));
+                var number = (double)postfix[i] - 48;
+                stack.Push(number);
             }
         }
         return stack.Pop();
     }
-
-    private static double Result(double operator1, char item, double operator2)
+    private static double Calculate(double number1, char @operator, double number2)
     {
-        return item switch
+        switch (@operator)
         {
-            '+' => operator1 + operator2,
-            '-' => operator1 - operator2,
-            '*' => operator1 * operator2,
-            '/' => operator1 / operator2,
-            '^' => Math.Pow(operator1, operator2),
-            _ => throw new Exception("Invalid expresion"),
-        };
+            case '^': return Math.Pow(number1, number2);
+            case '*'  return number1 * number2;
+            case '/': return number1 / number2;
+            case '+': return number1 + number2;
+            case '-': return number1 - number2;
+            default: throw new Exception("Not valid operator.");
+        }
     }
 
     private static string ToPostfix(string infix)
     {
-        var stack = new Stack<char>();
+        var stack = new Stack<char>(100);
         var postfix = string.Empty;
-        foreach (var item in infix)
+        for (int i = 0; i < infix.Length; i++)
         {
-            if (IsOperator(item))
-            {
-                if (stack.Count == 0)
+            if (IsOperator(infix[i]))
+            { 
+            if (stack.IsEmpty)
+
                 {
-                    stack.Push(item);
+                    stack.Push(infix[i]);
                 }
                 else
                 {
-                    if (item == ')')
+                    if (infix[i] == ')')
                     {
                         do
                         {
+
                             postfix += stack.Pop();
-                        } while (stack.Peek() != '(');
-                        stack.Pop();
-                    }
-                    else
-                    {
-                        if (PriorityExpression(item) > PriorityStack(stack.Peek()))
-                        {
-                            stack.Push(item);
+                        } while (stack.GetItemInTop() != '(') ;
+                            stack.Pop();
                         }
                         else
                         {
-                            postfix += stack.Pop();
-                            stack.Push(item);
+                            if (PriorityInExpression(infix[i]) > PriorityInStack(stack.GetItemInTop()))
+                            {
+                                stack.Push(infix[i]);
+                            }
+                            else
+                            {
+                                postfix += stack.Pop();
+                                stack.Push(infix[i]);
+                            }
                         }
                     }
-                }
+            
+
             }
+
             else
             {
-                postfix += item;
+                postfix += infix[i];
             }
         }
-        do
+
+        while (!stack.IsEmpty())
         {
             postfix += stack.Pop();
-        } while (stack.Count > 0);
+        }
         return postfix;
+
     }
 
-    private int PriorityStack(char @operator)
+    private static bool IsOperator(char item)
     {
-        switch @operator
-        {
-            case '^' return => 3;
-            case '*' return => 2;
-            case '/' return => 2;
-            case '+' return => 1;
-            case '-' return => 1;
-            case '(' return => 0;
-            default: throw new Exception("Invalid expression."),
-        };
+        if (item == '(' || item == ')' || (item == '^' || item == '/' || (item == '*' || item == '+' || (item
+            == '-')
+       {
+            return true;
+        }
+        return false;
     }
 
-    private int PriorityExpression(char @operator)
+    private static int PriorityInExpression(char @operator)
     {
-        switch @operator 
+        switch (@operator)
         {
            case '^' return => 4;
            case '*' return => 2;
@@ -112,9 +116,23 @@ public class FunctionEvaluator
            case '+' return => 1;
            case '-' return => 1;
            case '(' return => 5:
-           default: throw new Exception("Invalid expression."),
-        };
+           default: throw new Exception("Not valid operator.");
+        }
     }
 
-    private static bool IsOperator(char item) => "()^*/+-".IndexOf(item) >= 0;
+    private static int PriorityInStack(char @operator)
+    {
+        switch (@operator)
+        {
+            case '^' return => 3;
+            case '*' return => 2;
+            case '/' return => 2;
+            case '+' return => 1;
+            case '-' return => 1;
+            case '(' return => 0;
+            default: throw new Exception("Not valid operator.");
+        }
+        
+    }
+
 }

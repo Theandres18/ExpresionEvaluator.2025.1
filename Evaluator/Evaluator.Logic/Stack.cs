@@ -6,24 +6,26 @@ using System.Threading.Tasks;
 
 namespace Evaluator.Logic
 {
-    public class Stack
+    public class Stack<T>
     {
 
         private T[] _stack;
-        private int _stop;
+        private int _top;
         
 
         public Stack(int n)
         {
-            _N = n;
-            _stack = new T[n];  
+            N = n;
+            _stack = new T[N];  
         }
 
         public int N { get; }
 
-        public bool IsEmpty() => _stop == 0;
+        public bool IsEmpty() => _top == 0;
 
-        public bool IsFull() => _stop == _N;
+        public bool IsFull() => _top == N;
+
+        public T GetItemInTop() => _stack[_top - 1];
 
         public void Push(T item)
         { 
@@ -34,8 +36,8 @@ namespace Evaluator.Logic
         
         
 
-           _stack[_stop] = item;
-           _stop++;
+           _stack[_top] = item;
+           _top++;
             
          }
             public T Pop()
@@ -45,58 +47,11 @@ namespace Evaluator.Logic
                 throw new Exception("Stack empty.");
             
             }
-            var item = _stack[_stop];
-            _stop--;
+            var item = _stack[_top - 1];
+            _top--;
             return item;
 
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public QueueUsingArray(int capacity)
-        {
-            elements = new T[capacity];
-            front = 0;
-            rear = -1;
-            count = 0;
-        }
-
-        public void Enqueue(T item)
-        {
-            if (count == elements.Length)
-                throw new InvalidOperationException("Queue is full.");
-            rear = (rear + 1) % elements.Length;
-            elements[rear] = item;
-            count++;
-        }
-
-        public T Dequeue()
-        {
-            if (count == 0)
-                throw new InvalidOperationException("Queue is empty.");
-            T item = elements[front];
-            front = (front + 1) % elements.Length;
-            count--;
-            return item;
-        }
-
-        public T Peek()
-        {
-            if (count == 0)
-                throw new InvalidOperationException("Queue is empty.");
-            return elements[front];
         }
     }
 }
-}
+        

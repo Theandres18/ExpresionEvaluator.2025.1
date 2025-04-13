@@ -1,5 +1,7 @@
-namespace Evaluator.UI.Windows
+using Evaluator.Logic;
+using System.Linq.Expressions;
 
+namespace Evaluator.UI.Windows
 {
     public partial class Form1 : Form
     {
@@ -7,6 +9,11 @@ namespace Evaluator.UI.Windows
         {
             InitializeComponent();
         }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void btn7_Click(object sender, EventArgs e)
         {
             txtDisplay.Text += "7";
@@ -60,6 +67,56 @@ namespace Evaluator.UI.Windows
         private void btnDot_Click(object sender, EventArgs e)
         {
             txtDisplay.Text += ".";
+        }
+
+        private void btnDivide_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text += "/";
+        }
+
+        private void btnMultiply_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text += "*";
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text = txtDisplay.Text.Substring(0, txtDisplay.Text.Length -1);
+        }
+
+        private void btnPlus_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text += "+";
+        }
+
+        private void btnMinus_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text += "-";
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text = string.Empty;
+        }
+
+        private void btnOpenParenthesis_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text += "(";
+        }
+
+        private void btnCloseParenthesis_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text += ")";
+        }
+
+        private void btnPow_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text += "^";
+        }
+
+        private void btnResult_Click(object sender, EventArgs e)
+        {
+            txtDisplay.Text += $"{FunctionEvaluator.Evaluate(txtDisplay.Text)}");
         }
     }
 }
