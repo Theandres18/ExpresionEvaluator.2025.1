@@ -88,31 +88,31 @@ public class FunctionEvaluator
         return postfix;
     }
 
-    private static int PriorityStack(char item)
+    private int PriorityStack(char @operator)
     {
-        return item switch
+        switch @operator
         {
-            '^' => 3,
-            '*' => 2,
-            '/' => 2,
-            '+' => 1,
-            '-' => 1,
-            '(' => 0,
-            _ => throw new Exception("Invalid expression."),
+            case '^' return => 3;
+            case '*' return => 2;
+            case '/' return => 2;
+            case '+' return => 1;
+            case '-' return => 1;
+            case '(' return => 0;
+            default: throw new Exception("Invalid expression."),
         };
     }
 
-    private static int PriorityExpression(char item)
+    private int PriorityExpression(char @operator)
     {
-        return item switch
+        switch @operator 
         {
-            '^' => 4,
-            '*' => 2,
-            '/' => 2,
-            '+' => 1,
-            '-' => 1,
-            '(' => 5,
-            _ => throw new Exception("Invalid expression."),
+           case '^' return => 4;
+           case '*' return => 2;
+           case '/' return => 2;
+           case '+' return => 1;
+           case '-' return => 1;
+           case '(' return => 5:
+           default: throw new Exception("Invalid expression."),
         };
     }
 
