@@ -81,7 +81,7 @@ namespace Evaluator.UI.Windows
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            txtDisplay.Text = txtDisplay.Text.Substring(0, txtDisplay.Text.Length -1);
+            txtDisplay.Text = txtDisplay.Text.Substring(0, txtDisplay.Text.Length - 1);
         }
 
         private void btnPlus_Click(object sender, EventArgs e)
@@ -116,7 +116,12 @@ namespace Evaluator.UI.Windows
 
         private void btnResult_Click(object sender, EventArgs e)
         {
-            txtDisplay.Text += $"{FunctionEvaluator.Evaluate(txtDisplay.Text)}");
+            txtDisplay.Text += $"={FunctionEvaluator.Evaluate(txtDisplay.Text)}";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

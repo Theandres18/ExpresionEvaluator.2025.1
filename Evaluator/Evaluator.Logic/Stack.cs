@@ -42,7 +42,7 @@ namespace Evaluator.Logic
          }
             public T Pop()
         {
-            if (IsEmpty)
+            if (IsEmpty())
             {  
                 throw new Exception("Stack empty.");
             

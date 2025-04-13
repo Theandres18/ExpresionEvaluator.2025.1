@@ -33,13 +33,14 @@ public class FunctionEvaluator
         switch (@operator)
         {
             case '^': return Math.Pow(number1, number2);
-            case '*'  return number1 * number2;
+            case '*': return number1 * number2;
             case '/': return number1 / number2;
             case '+': return number1 + number2;
             case '-': return number1 - number2;
-            default: throw new Exception("Not valid operator.");
+            default: throw new Exception("Not a valid operator.");
         }
     }
+
 
     private static string ToPostfix(string infix)
     {
@@ -49,7 +50,7 @@ public class FunctionEvaluator
         {
             if (IsOperator(infix[i]))
             { 
-            if (stack.IsEmpty)
+            if (stack.IsEmpty())
 
                 {
                     stack.Push(infix[i]);
@@ -98,41 +99,43 @@ public class FunctionEvaluator
 
     private static bool IsOperator(char item)
     {
-        if (item == '(' || item == ')' || (item == '^' || item == '/' || (item == '*' || item == '+' || (item
-            == '-')
-       {
+        if (item == '(' || item == ')' || item == '^' || item == '/' || item == '*' || item == '+' || item == '-')
+        {
             return true;
         }
+
         return false;
     }
+
 
     private static int PriorityInExpression(char @operator)
     {
         switch (@operator)
         {
-           case '^' return => 4;
-           case '*' return => 2;
-           case '/' return => 2;
-           case '+' return => 1;
-           case '-' return => 1;
-           case '(' return => 5:
-           default: throw new Exception("Not valid operator.");
+            case '^': return 4;
+            case '*': return 2;
+            case '/': return 2;
+            case '+': return 1;
+            case '-': return 1;
+            case '(': return 5;
+            default: throw new Exception("Not a valid operator.");
         }
     }
+
 
     private static int PriorityInStack(char @operator)
     {
         switch (@operator)
         {
-            case '^' return => 3;
-            case '*' return => 2;
-            case '/' return => 2;
-            case '+' return => 1;
-            case '-' return => 1;
-            case '(' return => 0;
-            default: throw new Exception("Not valid operator.");
+            case '^': return 3;
+            case '*': return 2;
+            case '/': return 2;
+            case '+': return 1;
+            case '-': return 1;
+            case '(': return 0;
+            default: throw new Exception("Not a valid operator.");
         }
-        
     }
+
 
 }
